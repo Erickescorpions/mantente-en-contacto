@@ -12,7 +12,7 @@ class PlaceConfigModalViewController: UIViewController {
     @IBOutlet weak var placeTitle: UILabel!
     @IBOutlet weak var placeAddress: UILabel!
     
-    var place: Place?
+    var place: PlaceHelp?
 
     override func viewDidLoad() {
         super.viewDidLoad()

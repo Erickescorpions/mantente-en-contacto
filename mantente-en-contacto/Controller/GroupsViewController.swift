@@ -39,7 +39,9 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
         -> Int
     {
-        return data[section].members.count
+        let group = data[section]
+        let members = group.members as? Set<Membership> ?? []
+        return members.count
     }
 
     func tableView(
@@ -53,7 +55,7 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
         _ tableView: UITableView,
         titleForHeaderInSection section: Int
     ) -> String? {
-        return data[section].groupName
+        return data[section].name
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
@@ -65,10 +67,75 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
                 for: indexPath
             ) as! GroupTableViewCell
 
-        let member = data[indexPath.section].members[indexPath.row]
-        cell.memberImage.image = UIImage(named: member.perfilPicture!)
+        let group = data[indexPath.section]
+
+        let members: [User] = (group.members as? Set<Membership> ?? [])
+            .compactMap { $0.user }
+            .sorted { ($0.username ?? "") < ($1.username ?? "") }
+
+        let member = members[indexPath.row]
+
+        if let path = member.avatarPath, !path.isEmpty,
+            let img = UIImage(named: path)
+        {
+            cell.memberImage.image = img
+        } else {
+            cell.memberImage.image = UIImage(systemName: "person.crop.circle")
+        }
+
         cell.memberUsername.text = member.username
 
         return cell
     }
+    
+    func tableView(_ tableView: UITableView,
+                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
+                   -> UISwipeActionsConfiguration? {
+
+        let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { _, _, success in
+            let group = self.data[indexPath.section]
+  
+            let members = (group.members as? Set<Membership> ?? [])
+                .sorted { ($0.user?.username ?? "") < ($1.user?.username ?? "") }
+            
+            guard indexPath.row < members.count else {
+                success(false)
+                return
+            }
+            
+            let membership = members[indexPath.row]
+            let username = membership.user?.username ?? "this member"
+
+            let alert = UIAlertController(
+                title: "Remove Member",
+                message: "Remove \(username) from \(group.name ?? "this group")?",
+                preferredStyle: .alert
+            )
+            
+            let confirm = UIAlertAction(title: "Confirm", style: .destructive) { _ in
+                let ctx = Connection.shared.persistentContainer.viewContext
+                ctx.delete(membership)
+                
+                do {
+                    try ctx.save()
+                    tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+                } catch {
+                    print("Error deleting membership:", error)
+                }
+                
+                success(true)
+            }
+            alert.addAction(confirm)
+            
+            let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+                success(false)
+            }
+            alert.addAction(cancel)
+            self.present(alert, animated: true)
+        }
+        
+        return UISwipeActionsConfiguration(actions: [deleteAction])
+    }
+
+
 }

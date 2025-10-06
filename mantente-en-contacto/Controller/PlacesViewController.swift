@@ -7,11 +7,17 @@
 
 import UIKit
 
+struct PlaceHelp {
+    let name: String
+    let address: String
+    let photo: String?
+}
+
 class PlacesViewController: UIViewController {
     
     @IBOutlet weak var indicatorContainer: UIView!
     
-    private let placeInfo = Place(name: "Erick's work", address: "De La Paz Avenue 1234", photo: nil)
+    private let placeInfo = PlaceHelp(name: "Erick's work", address: "De La Paz Avenue 1234", photo: nil)
     
     override func viewDidLoad() {
         super.viewDidLoad()

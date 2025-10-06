@@ -5,24 +5,10 @@
 //  Created by Erick :) Vazquez on 24/08/25.
 //
 
+import CoreData
+
 class GroupDataManager {
-    
-    private let home = Place(name: "home", address: "Fake Street 123", photo: nil)
-    private let work = Place(name: "work", address: "Fake Street 321", photo: nil)
-    
-    private lazy var groups: [Group] = [
-        Group(placesShared: [home, work], groupName: "Family", members: [
-            User(name: "Nancy S", username: "Nan", perfilPicture: "user2"),
-            User(name: "Renada V", username: "Ren", perfilPicture: "user3"),
-            User(name: "Nelly S", username: "Nelulis", perfilPicture: "user2"),
-            User(name: "Carolina P", username: "Caro", perfilPicture: "user3")
-        ]),
-        Group(placesShared: [work], groupName: "My Team Job", members: [
-            User(name: "Ricardo", username: "Richie", perfilPicture: "user4"),
-            User(name: "Fernanda", username: "Fer", perfilPicture: "user3"),
-            User(name: "Isaias", username: "Isa", perfilPicture: "user1")
-        ])
-    ]
+    private var groups: [Group] = []
     
     func getGroup(at index : Int) -> Group {
         return groups[index]
@@ -33,6 +19,14 @@ class GroupDataManager {
     }
     
     func all() -> [Group] {
-        return groups
+        let fetch: NSFetchRequest<Group> = Group.fetchRequest()
+        let context = Connection.shared.persistentContainer.viewContext
+        
+        do {
+            self.groups = try context.fetch(fetch)
+            return self.groups
+        } catch {
+            return []
+        }
     }
 }

@@ -1,0 +1,44 @@
+{
+  "users": [
+    { "id": 1, "username": "Ana López", "phone": "55-1111-2222", "avatarPath": null },
+    { "id": 2, "username": "Luis Pérez", "phone": "55-3333-4444", "avatarPath": null },
+    { "id": 3, "username": "María García", "phone": "55-5555-6666", "avatarPath": null },
+    { "id": 4, "username": "Carlos Ruiz", "phone": "55-7777-8888", "avatarPath": null },
+    { "id": 5, "username": "Sofía Torres", "phone": "55-9999-0000", "avatarPath": null },
+    { "id": 6, "username": "Diego Hernández", "phone": "55-1212-3434", "avatarPath": null },
+    { "id": 7, "username": "Fernanda Martínez", "phone": "55-5656-7878", "avatarPath": null }
+  ],
+  "groups": [
+    { "id": 1, "name": "Amigos UNAM", "createdAt": "2025-10-04T18:00:00Z" },
+    { "id": 2, "name": "Laboratorio ENAC", "createdAt": "2025-10-04T18:10:00Z" },
+    { "id": 3, "name": "Familia", "createdAt": "2025-10-04T18:20:00Z" }
+  ],
+  "places": [
+    { "id": 1, "name": "Café ENAC", "address": "Facultad ENAC, C.U., Coyoacán, CDMX", "latitude": 19.3228, "longitude": -99.1879, "createdAt": "2025-10-04T19:00:00Z" },
+    { "id": 2, "name": "Biblioteca Central UNAM", "address": "C.U., Coyoacán, CDMX", "latitude": 19.3325, "longitude": -99.1869, "createdAt": "2025-10-04T19:05:00Z" },
+    { "id": 3, "name": "Estadio Olímpico Universitario", "address": "C.U., Coyoacán, CDMX", "latitude": 19.3329, "longitude": -99.1881, "createdAt": "2025-10-04T19:10:00Z" },
+    { "id": 4, "name": "Hotel Camino Real Santa Fe", "address": "Juan Salvador Agraz 97, Santa Fe, CDMX", "latitude": 19.3609, "longitude": -99.2623, "createdAt": "2025-10-04T19:15:00Z" }
+  ],
+  "memberships": [
+    { "id": 1, "createdAt": "2025-10-05T00:10:00Z", "userId": 1, "groupId": 1 },
+    { "id": 2, "createdAt": "2025-10-05T00:11:00Z", "userId": 2, "groupId": 1 },
+    { "id": 3, "createdAt": "2025-10-05T00:12:00Z", "userId": 3, "groupId": 1 },
+    { "id": 4, "createdAt": "2025-10-05T00:13:00Z", "userId": 4, "groupId": 1 },
+
+    { "id": 5, "createdAt": "2025-10-05T00:20:00Z", "userId": 1, "groupId": 2 },
+    { "id": 6, "createdAt": "2025-10-05T00:21:00Z", "userId": 5, "groupId": 2 },
+    { "id": 7, "createdAt": "2025-10-05T00:22:00Z", "userId": 6, "groupId": 2 },
+
+    { "id": 8, "createdAt": "2025-10-05T00:30:00Z", "userId": 1, "groupId": 3 },
+    { "id": 9, "createdAt": "2025-10-05T00:31:00Z", "userId": 7, "groupId": 3 }
+  ],
+  "sharedPlaces": [
+    { "id": 1, "createdAt": "2025-10-05T01:00:00Z", "sharedById": 1, "groupId": 1, "placeId": 1 },
+    { "id": 2, "createdAt": "2025-10-05T01:05:00Z", "sharedById": 2, "groupId": 1, "placeId": 2 },
+    { "id": 3, "createdAt": "2025-10-05T01:10:00Z", "sharedById": 5, "groupId": 2, "placeId": 3 },
+    { "id": 4, "createdAt": "2025-10-05T01:15:00Z", "sharedById": 7, "groupId": 3, "placeId": 4 }
+  ],
+  "defaults": {
+    "suggestedDefaultUserId": 1
+  }
+}

@@ -6,8 +6,13 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		6ACC36842E93517C00F24259 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACC36832E93517C00F24259 /* CoreData.framework */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		6AC196B22E5835B900B03A4A /* mantente-en-contacto.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "mantente-en-contacto.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		6ACC36832E93517C00F24259 /* CoreData.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreData.framework; path = System/Library/Frameworks/CoreData.framework; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -36,6 +41,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6ACC36842E93517C00F24259 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -46,6 +52,7 @@
 			isa = PBXGroup;
 			children = (
 				6AC196B42E5835B900B03A4A /* mantente-en-contacto */,
+				6ACC36822E93517C00F24259 /* Frameworks */,
 				6AC196B32E5835B900B03A4A /* Products */,
 			);
 			sourceTree = "<group>";
@@ -56,6 +63,14 @@
 				6AC196B22E5835B900B03A4A /* mantente-en-contacto.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		6ACC36822E93517C00F24259 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6ACC36832E93517C00F24259 /* CoreData.framework */,
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
