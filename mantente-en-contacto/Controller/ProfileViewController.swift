@@ -6,10 +6,12 @@
 //
 
 import UIKit
+import CoreData
 
 class ProfileViewController: UIViewController {
     
     @IBOutlet weak var profileImage: UIImageView!
+    @IBOutlet weak var usernameLabel: UILabel!
     
     let profileMenuOptions: [(title: String, icon: UIImage)] = [
         (title: "Personal Information", icon: UIImage(systemName: "person.circle")!),
@@ -20,6 +22,24 @@ class ProfileViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        // obtenemos el id del usuario
+        let userId = UserDefaults.standard.integer(forKey: "userId")
+        let ctx = Connection.shared.persistentContainer.viewContext
+
+        let fetch: NSFetchRequest<User> = User.fetchRequest()
+        fetch.fetchLimit = 1
+        fetch.predicate = NSPredicate(format: "id == %d", userId)
+
+        do {
+            if let user = try ctx.fetch(fetch).first {
+                usernameLabel.text = user.username
+            } else {
+                print("No se encontró usuario con id \(userId)")
+            }
+        } catch {
+            print("Error al buscar usuario:", error)
+        }
         
         profileImage.layer.masksToBounds = true
         profileImage.contentMode = .scaleAspectFit

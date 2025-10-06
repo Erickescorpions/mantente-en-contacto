@@ -135,6 +135,7 @@
                     <tabBarItem key="tabBarItem" title="Profile" image="profile_icon" id="oyh-uo-HxQ"/>
                     <connections>
                         <outlet property="profileImage" destination="Vp5-QL-d8K" id="2tl-p0-0Yd"/>
+                        <outlet property="usernameLabel" destination="i3P-QI-zgT" id="2NH-dW-HO9"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZ0-mi-Whb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -154,14 +155,14 @@
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="bLS-fp-ckp" customClass="GroupTableViewCell" customModule="mantente_en_contacto" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="373" height="44.333332061767578"/>
+                                        <rect key="frame" x="0.0" y="50" width="373" height="43.333332061767578"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bLS-fp-ckp" id="EI6-gF-5dK">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="44.333332061767578"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="373" height="43.333332061767578"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vrd-Kn-7tg">
-                                                    <rect key="frame" x="66" y="11.333333333333334" width="200" height="21.666666666666664"/>
+                                                    <rect key="frame" x="66" y="11.333333333333334" width="200" height="20.666666666666664"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="greaterThanOrEqual" constant="200" id="KEh-KY-KTH"/>
                                                     </constraints>
@@ -170,7 +171,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="1cp-Xd-anT">
-                                                    <rect key="frame" x="16" y="6.9999999999999982" width="30" height="30.333333333333329"/>
+                                                    <rect key="frame" x="16" y="6.9999999999999982" width="30" height="29.333333333333329"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="30" id="PoF-vq-ch7"/>
                                                     </constraints>

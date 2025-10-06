@@ -21,4 +21,4 @@ struct GroupDTO: Codable { let id: Int16, name: String, createdAt: Date }
 struct PlaceDTO: Codable { let id: Int16, name: String, address: String?, latitude: Double, longitude: Double, createdAt: Date }
 struct MembershipDTO: Codable { let id: Int16, createdAt: Date, userId: Int16, groupId: Int16 }
 struct SharedPlaceDTO: Codable { let id: Int16, createdAt: Date, sharedById: Int16, groupId: Int16, placeId: Int16 }
-struct DefaultsDTO: Codable { let suggestedDefaultUserId: Int16 }
+struct DefaultsDTO: Codable { let userId: Int16 }

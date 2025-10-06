@@ -9,8 +9,9 @@ import UIKit
 
 class GroupsViewController: UIViewController {
 
+    private let dataManager = GroupDataManager()
+    private var data: [Group] = []
     private let floatingActionButton = FloatingActionButton()
-    let data: [Group] = GroupDataManager().all()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,11 @@ class GroupsViewController: UIViewController {
                 constant: -24
             ),
         ])
+    }
 
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        data = dataManager.all()
     }
 }
 
@@ -87,55 +92,67 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
 
         return cell
     }
-    
-    func tableView(_ tableView: UITableView,
-                   trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath)
-                   -> UISwipeActionsConfiguration? {
 
-        let deleteAction = UIContextualAction(style: .destructive, title: "Remove") { _, _, success in
+    func tableView(
+        _ tableView: UITableView,
+        trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
+    )
+        -> UISwipeActionsConfiguration?
+    {
+
+        let deleteAction = UIContextualAction(
+            style: .destructive,
+            title: "Remove"
+        ) { _, _, success in
             let group = self.data[indexPath.section]
-  
+
             let members = (group.members as? Set<Membership> ?? [])
-                .sorted { ($0.user?.username ?? "") < ($1.user?.username ?? "") }
-            
+                .sorted {
+                    ($0.user?.username ?? "") < ($1.user?.username ?? "")
+                }
+
             guard indexPath.row < members.count else {
                 success(false)
                 return
             }
-            
+
             let membership = members[indexPath.row]
             let username = membership.user?.username ?? "this member"
 
             let alert = UIAlertController(
                 title: "Remove Member",
-                message: "Remove \(username) from \(group.name ?? "this group")?",
+                message:
+                    "Remove \(username) from \(group.name ?? "this group")?",
                 preferredStyle: .alert
             )
-            
-            let confirm = UIAlertAction(title: "Confirm", style: .destructive) { _ in
+
+            let confirm = UIAlertAction(title: "Confirm", style: .destructive) {
+                _ in
                 let ctx = Connection.shared.persistentContainer.viewContext
                 ctx.delete(membership)
-                
+
                 do {
                     try ctx.save()
-                    tableView.reloadSections(IndexSet(integer: indexPath.section), with: .automatic)
+                    tableView.reloadSections(
+                        IndexSet(integer: indexPath.section),
+                        with: .automatic
+                    )
                 } catch {
                     print("Error deleting membership:", error)
                 }
-                
+
                 success(true)
             }
             alert.addAction(confirm)
-            
+
             let cancel = UIAlertAction(title: "Cancel", style: .cancel) { _ in
                 success(false)
             }
             alert.addAction(cancel)
             self.present(alert, animated: true)
         }
-        
+
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-
 
 }

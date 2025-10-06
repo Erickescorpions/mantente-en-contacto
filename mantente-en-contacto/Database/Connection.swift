@@ -138,8 +138,14 @@ class Connection: NSObject {
                             sp.group = g
                             sp.place = p
                         }
+                        
+                        // usuario por defecto, lo guardamos en el user defaults
+                        UserDefaults.standard.set(mock.defaults?.userId, forKey: "userId")
 
-                        do { try ctx.save() } catch {
+                        do {
+                            try ctx.save()
+                            print("Informacion guardada")
+                        } catch {
                             print("Save error:", error)
                         }
                     }

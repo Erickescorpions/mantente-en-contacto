@@ -39,6 +39,6 @@
     { "id": 4, "createdAt": "2025-10-05T01:15:00Z", "sharedById": 7, "groupId": 3, "placeId": 4 }
   ],
   "defaults": {
-    "suggestedDefaultUserId": 1
+    "userId": 1
   }
 }
