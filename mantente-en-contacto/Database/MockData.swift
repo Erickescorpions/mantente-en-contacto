@@ -6,7 +6,7 @@
 //
 
 import Foundation
-
+    
 struct MockData: Codable {
     let users: [UserDTO]
     let groups: [GroupDTO]
