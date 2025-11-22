@@ -9,6 +9,15 @@ import UIKit
 
 final class RegisterView: UIView {
     
+    let logo: UIImageView = {
+        let imageView = UIImageView()
+        imageView.image = UIImage(named: "logo")
+        imageView.contentMode = .scaleAspectFill
+        imageView.clipsToBounds = true
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        return imageView
+    }()
+    
     let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Create your account"
@@ -16,14 +25,6 @@ final class RegisterView: UIView {
         label.textAlignment = .center
         label.textColor = .label
         return label
-    }()
-    
-    let avatarImageView: UIImageView = {
-        let iv = UIImageView(image: UIImage(systemName: "person.crop.circle"))
-        iv.tintColor = .systemBlue
-        iv.contentMode = .scaleAspectFit
-        iv.translatesAutoresizingMaskIntoConstraints = false
-        return iv
     }()
     
     let usernameField: UITextField = {
@@ -75,7 +76,6 @@ final class RegisterView: UIView {
     private lazy var stackView: UIStackView = {
         let sv = UIStackView(arrangedSubviews: [
             titleLabel,
-            avatarImageView,
             usernameField,
             emailField,
             passwordField,
@@ -101,15 +101,21 @@ final class RegisterView: UIView {
     
     private func setupView() {
         backgroundColor = .systemBackground
+        
+        addSubview(logo)
         addSubview(stackView)
         
         NSLayoutConstraint.activate([
-            avatarImageView.heightAnchor.constraint(equalToConstant: 80),
-            avatarImageView.widthAnchor.constraint(equalToConstant: 80),
+            logo.topAnchor.constraint(equalTo: safeAreaLayoutGuide.topAnchor, constant: 40),
+            logo.centerXAnchor.constraint(equalTo: centerXAnchor),
+            logo.widthAnchor.constraint(equalToConstant: 80),
+            logo.heightAnchor.constraint(equalToConstant: 80),
             
+            stackView.topAnchor.constraint(equalTo: logo.bottomAnchor, constant: 24),
             stackView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 24),
-            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24),
-            stackView.centerYAnchor.constraint(equalTo: centerYAnchor)
+            stackView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -24)
         ])
+        
+        logo.layer.cornerRadius = 40
     }
 }

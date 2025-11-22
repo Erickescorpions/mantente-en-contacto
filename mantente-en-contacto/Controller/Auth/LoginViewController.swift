@@ -10,6 +10,7 @@ import UIKit
 class LoginViewController: UIViewController {
     private let contentView = LoginView()
 //    private let viewModel = RegisterViewModel()
+    
 
     override func loadView() {
         self.view = contentView
@@ -20,6 +21,11 @@ class LoginViewController: UIViewController {
         contentView.loginButton.addTarget(
             self,
             action: #selector(registerTapped),
+            for: .touchUpInside
+        )
+        contentView.createAccountLink.addTarget(
+            self,
+            action: #selector(goToRegister),
             for: .touchUpInside
         )
     }
@@ -36,6 +42,10 @@ class LoginViewController: UIViewController {
 //            password: password,
 //            confirm: confirm
 //        )
+    }
+    
+    @objc private func goToRegister() {
+        performSegue(withIdentifier: "Create account", sender: nil)
     }
 
 }

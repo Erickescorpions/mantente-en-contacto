@@ -13,7 +13,7 @@ class OnboardingViewController: UIPageViewController {
     let pageControl = UIPageControl()
     let buttonNext: UIButton = {
         let button = UIButton()
-        button.setTitle("Next >", for: .normal)
+        button.setTitle("Next", for: .normal)
         button.backgroundColor = .myYellow
         return button
     }()
@@ -75,6 +75,7 @@ class OnboardingViewController: UIPageViewController {
         let page2 = PlacesAndContactsPageViewController()
         let page3 = PrivacyPageViewController()
         let page4 = GetStartedPageViewController()
+        page4.delegate = self
 
         pages.append(contentsOf: [page1, page2, page3, page4])
 
@@ -109,11 +110,6 @@ class OnboardingViewController: UIPageViewController {
         buttonNext.setTitleColor(.black, for: .normal)
         buttonNext.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
         buttonNext.layer.cornerRadius = 12
-        buttonNext.layer.masksToBounds = false
-        buttonNext.layer.shadowColor = UIColor.black.cgColor
-        buttonNext.layer.shadowOpacity = 0.1
-        buttonNext.layer.shadowRadius = 4
-        buttonNext.layer.shadowOffset = CGSize(width: 0, height: 2)
 
         buttonSkip.translatesAutoresizingMaskIntoConstraints = false
         buttonSkip.setTitleColor(.darkGray, for: .normal)
@@ -263,5 +259,13 @@ extension OnboardingViewController: UIPageViewControllerDataSource,
         }
 
         updateUIForPage(at: currentIndex)
+    }
+}
+
+// MARK: OnboardingNavigationDelegate
+extension OnboardingViewController: OnboardingNavigationDelegate {
+
+    func didTapGetStarted() {
+        performSegue(withIdentifier: "login", sender: nil)
     }
 }
