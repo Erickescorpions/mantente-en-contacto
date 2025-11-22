@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		6ACC36842E93517C00F24259 /* CoreData.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6ACC36832E93517C00F24259 /* CoreData.framework */; };
+		6AF7EC352ED237FC000F2047 /* FirebaseAnalytics in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF7EC342ED237FC000F2047 /* FirebaseAnalytics */; };
+		6AF7EC372ED237FC000F2047 /* FirebaseAuth in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF7EC362ED237FC000F2047 /* FirebaseAuth */; };
+		6AF7EC392ED237FC000F2047 /* FirebaseFirestore in Frameworks */ = {isa = PBXBuildFile; productRef = 6AF7EC382ED237FC000F2047 /* FirebaseFirestore */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,6 +44,9 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6AF7EC352ED237FC000F2047 /* FirebaseAnalytics in Frameworks */,
+				6AF7EC392ED237FC000F2047 /* FirebaseFirestore in Frameworks */,
+				6AF7EC372ED237FC000F2047 /* FirebaseAuth in Frameworks */,
 				6ACC36842E93517C00F24259 /* CoreData.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -93,6 +99,9 @@
 			);
 			name = "mantente-en-contacto";
 			packageProductDependencies = (
+				6AF7EC342ED237FC000F2047 /* FirebaseAnalytics */,
+				6AF7EC362ED237FC000F2047 /* FirebaseAuth */,
+				6AF7EC382ED237FC000F2047 /* FirebaseFirestore */,
 			);
 			productName = "mantente-en-contacto";
 			productReference = 6AC196B22E5835B900B03A4A /* mantente-en-contacto.app */;
@@ -122,6 +131,9 @@
 			);
 			mainGroup = 6AC196A92E5835B900B03A4A;
 			minimizedProjectReferenceProxies = 1;
+			packageReferences = (
+				6AF7EC332ED237FC000F2047 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */,
+			);
 			preferredProjectObjectVersion = 77;
 			productRefGroup = 6AC196B32E5835B900B03A4A /* Products */;
 			projectDirPath = "";
@@ -360,6 +372,35 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		6AF7EC332ED237FC000F2047 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/firebase/firebase-ios-sdk";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 12.6.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		6AF7EC342ED237FC000F2047 /* FirebaseAnalytics */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF7EC332ED237FC000F2047 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAnalytics;
+		};
+		6AF7EC362ED237FC000F2047 /* FirebaseAuth */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF7EC332ED237FC000F2047 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseAuth;
+		};
+		6AF7EC382ED237FC000F2047 /* FirebaseFirestore */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6AF7EC332ED237FC000F2047 /* XCRemoteSwiftPackageReference "firebase-ios-sdk" */;
+			productName = FirebaseFirestore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 6AC196AA2E5835B900B03A4A /* Project object */;
 }

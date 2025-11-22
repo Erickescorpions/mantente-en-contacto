@@ -38,7 +38,8 @@ final class LoginView: UIView {
 
     let accountField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Username or Email"
+        tf.placeholder = "Email"
+        tf.keyboardType = .emailAddress
         tf.borderStyle = .roundedRect
         tf.autocapitalizationType = .none
         tf.autocorrectionType = .no
