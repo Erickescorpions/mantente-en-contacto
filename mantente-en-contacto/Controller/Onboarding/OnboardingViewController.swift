@@ -266,6 +266,7 @@ extension OnboardingViewController: UIPageViewControllerDataSource,
 extension OnboardingViewController: OnboardingNavigationDelegate {
 
     func didTapGetStarted() {
+        UserDefaults.standard.set(true, forKey: "hasSeenOnboarding")
         performSegue(withIdentifier: "login", sender: nil)
     }
 }

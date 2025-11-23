@@ -120,10 +120,6 @@ class RegisterViewController: UIViewController {
                 return
             }
             
-            
-            UserDefaults.standard.set(user.uid, forKey: "user_uid")
-            UserDefaults.standard.set(user.email, forKey: "user_email")
-            
             self.continueToAvatarSelection()
         }
 

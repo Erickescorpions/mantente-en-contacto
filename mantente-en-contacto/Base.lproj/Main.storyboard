@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="qqO-9e-aD3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="24128" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
     <device id="retina6_12" orientation="portrait" appearance="light"/>
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="24063"/>
@@ -12,7 +12,7 @@
         <!--Places-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="PlacesViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PlacesVC" id="BYZ-38-t0r" customClass="PlacesViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -59,7 +59,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="1026.7175572519084" y="-713.38028169014092"/>
+            <point key="canvasLocation" x="-179" y="-1031"/>
         </scene>
         <!--Profile-->
         <scene sceneID="Qo1-et-Lvh">
@@ -140,7 +140,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZ0-mi-Whb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953.4351145038167" y="726.76056338028172"/>
+            <point key="canvasLocation" x="584" y="-365"/>
         </scene>
         <!--Groups-->
         <scene sceneID="WXv-Iq-Rtf">
@@ -151,7 +151,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="dTJ-NK-ehg">
-                                <rect key="frame" x="10" y="191.66666666666669" width="373" height="523.33333333333326"/>
+                                <rect key="frame" x="10" y="132.66666666666669" width="373" height="616.33333333333326"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <prototypes>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="bLS-fp-ckp" customClass="GroupTableViewCell" customModule="mantente_en_contacto" customModuleProvider="target">
@@ -199,7 +199,7 @@
                                 </connections>
                             </tableView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Groups" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Irw-qb-HHX">
-                                <rect key="frame" x="10" y="138" width="373" height="33.666666666666657"/>
+                                <rect key="frame" x="10" y="79" width="373" height="33.666666666666657"/>
                                 <fontDescription key="fontDescription" style="UICTFontTextStyleTitle1"/>
                                 <color key="textColor" name="customColor"/>
                                 <nil key="highlightedColor"/>
@@ -221,12 +221,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mRo-JL-qYG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1953.4351145038167" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="-115" y="-365"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="rm2-jQ-VAn">
             <objects>
-                <pageViewController autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="qqO-9e-aD3" customClass="OnboardingViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
+                <pageViewController storyboardIdentifier="OnboardingVC" autoresizesArchivedViewToFullSize="NO" transitionStyle="scroll" navigationOrientation="horizontal" spineLocation="none" id="qqO-9e-aD3" customClass="OnboardingViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
                     <connections>
                         <segue destination="b7u-7W-l1S" kind="presentation" identifier="login" modalPresentationStyle="fullScreen" id="zFV-eS-1Gj"/>
                     </connections>
@@ -247,7 +247,7 @@
                     </view>
                     <navigationItem key="navigationItem" id="goT-5F-BkL"/>
                     <connections>
-                        <segue destination="2Pa-Wz-1cb" kind="presentation" identifier="AvatarSelection" modalPresentationStyle="fullScreen" id="rjr-am-UvW"/>
+                        <segue destination="2Pa-Wz-1cb" kind="presentation" modalPresentationStyle="fullScreen" id="rjr-am-UvW"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Ao8-2O-Jwu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -277,7 +277,7 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oHV-Qc-Uek">
-                                <rect key="frame" x="46" y="246" width="300" height="454"/>
+                                <rect key="frame" x="76" y="217" width="240" height="483"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             </view>
@@ -299,7 +299,7 @@
         <!--Login View Controller-->
         <scene sceneID="li0-bJ-0ti">
             <objects>
-                <viewController id="HZc-X4-KzL" customClass="LoginViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="LoginVC" id="HZc-X4-KzL" customClass="LoginViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Qo9-f1-rV4">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -309,6 +309,7 @@
                     <navigationItem key="navigationItem" id="3wG-oC-6kH"/>
                     <connections>
                         <segue destination="w9w-s6-DLe" kind="show" identifier="Create account" id="pOm-hc-12b"/>
+                        <segue destination="7PK-PB-VLV" kind="presentation" identifier="loginToTabNavigation" modalPresentationStyle="fullScreen" id="NG4-Aa-zqn"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0gs-3g-SB2" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -318,7 +319,7 @@
         <!--Tab Bar Controller-->
         <scene sceneID="ADu-fs-xnB">
             <objects>
-                <tabBarController automaticallyAdjustsScrollViewInsets="NO" id="7PK-PB-VLV" sceneMemberID="viewController">
+                <tabBarController storyboardIdentifier="TabBarController" automaticallyAdjustsScrollViewInsets="NO" id="7PK-PB-VLV" sceneMemberID="viewController">
                     <toolbarItems/>
                     <tabBar key="tabBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="avG-lO-PN5">
                         <rect key="frame" x="0.0" y="0.0" width="1000" height="1000"/>
@@ -333,14 +334,14 @@
                 </tabBarController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pag-yq-CbT" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="944.27480916030527" y="-2.1126760563380285"/>
+            <point key="canvasLocation" x="-947" y="-365"/>
         </scene>
         <!--Place Config Modal View Controller-->
         <scene sceneID="O1R-TO-AZJ">
             <objects>
                 <viewController id="RoV-B1-2jv" customClass="PlaceConfigModalViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="KBt-sm-cwR">
-                        <rect key="frame" x="0.0" y="0.0" width="393" height="793"/>
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="work" translatesAutoresizingMaskIntoConstraints="NO" id="Nc3-xy-ZaF">
@@ -387,12 +388,12 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mT3-yP-dAS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1861.8320610687022" y="-713.38028169014092"/>
+            <point key="canvasLocation" x="584" y="-1031"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KGX-KY-b1W">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="b7u-7W-l1S" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="AuthNC" automaticallyAdjustsScrollViewInsets="NO" id="b7u-7W-l1S" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="yQE-RN-amW">
                         <rect key="frame" x="0.0" y="59" width="393" height="54"/>
