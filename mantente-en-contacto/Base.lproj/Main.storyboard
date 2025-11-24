@@ -109,7 +109,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="nZ0-mi-Whb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="584" y="-365"/>
+            <point key="canvasLocation" x="1040" y="378"/>
         </scene>
         <!--Groups-->
         <scene sceneID="WXv-Iq-Rtf">
@@ -187,10 +187,28 @@
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Groups" image="group_icon" id="rrv-WA-Xv9"/>
+                    <connections>
+                        <segue destination="fmK-JF-JHb" kind="presentation" identifier="toAddNewGroup" id="DfG-IM-OB6"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mRo-JL-qYG" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-115" y="-365"/>
+        </scene>
+        <!--Add Group View Controller-->
+        <scene sceneID="BXx-7A-VnG">
+            <objects>
+                <viewController id="fmK-JF-JHb" customClass="AddGroupViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="2Eu-E4-MVW">
+                        <rect key="frame" x="0.0" y="0.0" width="393" height="783"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="sjS-Mv-rL4"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6nW-Ej-iLf" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="770" y="-362"/>
         </scene>
         <!--Onboarding View Controller-->
         <scene sceneID="rm2-jQ-VAn">

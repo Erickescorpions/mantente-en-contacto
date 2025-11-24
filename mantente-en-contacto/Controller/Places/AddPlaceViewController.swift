@@ -132,23 +132,19 @@ final class AddPlaceViewController: UIViewController {
         saveButton.translatesAutoresizingMaskIntoConstraints = false
         
         NSLayoutConstraint.activate([
-            // Campos arriba
             fieldsStack.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor, constant: 30),
             fieldsStack.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
             fieldsStack.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
             
-            // Tabla de grupos debajo del label "Shared with"
             groupsTableView.topAnchor.constraint(equalTo: fieldsStack.bottomAnchor, constant: 20),
             groupsTableView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
             groupsTableView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
             groupsTableView.heightAnchor.constraint(equalToConstant: 250),
             
-            // Label cuando no hay grupos
             noGroupsCreatedLabel.topAnchor.constraint(equalTo: fieldsStack.bottomAnchor, constant: 40),
             noGroupsCreatedLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 25),
             noGroupsCreatedLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -25),
             
-            // Botón abajo
             saveButton.topAnchor.constraint(greaterThanOrEqualTo: groupsTableView.bottomAnchor, constant: 16),
             saveButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             saveButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -30)
@@ -161,7 +157,7 @@ final class AddPlaceViewController: UIViewController {
         noGroupsCreatedLabel.isHidden = hasGroups
     }
     
-    // MARK: - Actions
+    // MARK: Actions
     
     @objc private func saveButtonTapped() {
         let placeName = placeNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
