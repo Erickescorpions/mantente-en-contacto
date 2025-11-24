@@ -92,11 +92,13 @@ class LoginViewController: UIViewController {
                         strongSelf.showAlert(
                             message: "The email address is badly formatted."
                         )
+                        break
 
                     case .wrongPassword, .userNotFound:
                         strongSelf.showAlert(
                             message: "Invalid credentials. Please try again."
                         )
+                        break
 
                     default:
                         strongSelf.showAlert(message: error.localizedDescription)

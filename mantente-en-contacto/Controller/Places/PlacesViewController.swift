@@ -1,0 +1,233 @@
+//
+//  PlacesViewController.swift
+//  mantente-en-contacto
+//
+//  Created by Erick :) Vazquez on 23/08/25.
+//
+
+import CoreLocation
+import MapKit
+import UIKit
+
+class PlacesViewController: UIViewController, CLLocationManagerDelegate,
+    MKMapViewDelegate
+{
+
+    private let map = MKMapView()
+    private let manager = CLLocationManager()
+    private var hasCenteredOnce = false
+    private var myCoordinates: CLLocationCoordinate2D!
+    private let searchController = UISearchController(
+        searchResultsController: nil
+    )
+    
+    private let selectionButton: UIButton = {
+        let button = UIButton(type: .system)
+        button.setTitle("Compartir este lugar", for: .normal)
+        button.isHidden = true  // lo ocultamos
+        button.backgroundColor = .myYellow
+        return button
+    }()
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        title = "Lugares compartidos"
+
+        // location manager
+        manager.delegate = self
+        manager.desiredAccuracy = kCLLocationAccuracyNearestTenMeters
+
+        // mapa
+        map.frame = view.bounds
+        map.delegate = self
+        map.showsUserLocation = true
+        map.autoresizingMask = [.flexibleWidth, .flexibleHeight]
+        view.addSubview(map)
+
+        // serach
+        navigationItem.searchController = searchController
+        searchController.obscuresBackgroundDuringPresentation = false
+        searchController.searchBar.placeholder = "Buscar lugar"
+        searchController.searchBar.delegate = self
+
+        // apretar para seleccionar
+        let longPress = UILongPressGestureRecognizer(
+            target: self,
+            action: #selector(handleLongPress(_:))
+        )
+        longPress.minimumPressDuration = 0.7
+        map.addGestureRecognizer(longPress)
+
+        setupSelectionButton()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        let status = manager.authorizationStatus
+        handleAuthorizationStatus(status)
+    }
+
+    // MARK: Boton de Seleccion
+    private func setupSelectionButton() {
+        selectionButton.translatesAutoresizingMaskIntoConstraints = false
+        selectionButton.setTitleColor(.black, for: .normal)
+        selectionButton.titleLabel?.font = .systemFont(
+            ofSize: 18,
+            weight: .semibold
+        )
+        selectionButton.layer.cornerRadius = 12
+        selectionButton.contentEdgeInsets = UIEdgeInsets(
+            top: 12,
+            left: 20,
+            bottom: 12,
+            right: 20
+        )
+
+        view.addSubview(selectionButton)
+        selectionButton.translatesAutoresizingMaskIntoConstraints = false
+
+        NSLayoutConstraint.activate([
+            selectionButton.bottomAnchor.constraint(
+                equalTo: view.safeAreaLayoutGuide.bottomAnchor,
+                constant: -16
+            ),
+            selectionButton.centerXAnchor.constraint(
+                equalTo: view.centerXAnchor
+            ),
+            selectionButton.heightAnchor.constraint(equalToConstant: 44),
+        ])
+
+        selectionButton.addTarget(
+            self,
+            action: #selector(selectionButtonTapped),
+            for: .touchUpInside
+        )
+    }
+
+    // MARK: CLLocationManagerDelegate
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        switch manager.authorizationStatus {
+        case .authorizedWhenInUse, .authorizedAlways:
+            manager.startUpdatingLocation()
+        case .denied, .restricted:
+            print("Permiso de ubicación denegado")
+        case .notDetermined:
+            break
+        @unknown default:
+            break
+        }
+    }
+
+    func locationManager(
+        _ manager: CLLocationManager,
+        didUpdateLocations locations: [CLLocation]
+    ) {
+        if let location = locations.first {
+            if !hasCenteredOnce {
+                centerMap(in: location)
+                hasCenteredOnce = true
+            }
+            myCoordinates = location.coordinate
+        }
+    }
+
+    // MARK: Helpers
+
+    private func handleAuthorizationStatus(_ status: CLAuthorizationStatus) {
+        switch status {
+        case .authorizedWhenInUse, .authorizedAlways:
+            manager.startUpdatingLocation()
+        case .denied, .restricted:
+            print("Permiso de ubicación denegado")
+        case .notDetermined:
+            manager.requestWhenInUseAuthorization()
+        @unknown default:
+            break
+        }
+    }
+
+    private func centerMap(in location: CLLocation) {
+        let region = MKCoordinateRegion(
+            center: location.coordinate,
+            latitudinalMeters: 1000,
+            longitudinalMeters: 1000
+        )
+        map.setRegion(region, animated: true)
+    }
+
+    private func setSelectedPlace(
+        at coordinate: CLLocationCoordinate2D,
+        title: String?
+    ) {
+        let selectionPins = map.annotations.filter { $0 is SelectionAnnotation }
+        map.removeAnnotations(selectionPins)
+
+        let annotation = SelectionAnnotation()
+        annotation.coordinate = coordinate
+        annotation.title = title ?? "Lugar seleccionado"
+        map.addAnnotation(annotation)
+
+        let region = MKCoordinateRegion(
+            center: coordinate,
+            latitudinalMeters: 1000,
+            longitudinalMeters: 1000
+        )
+        map.setRegion(region, animated: true)
+
+        selectionButton.isHidden = false
+        print(
+            "SelectionAnnotation en: \(coordinate.latitude), \(coordinate.longitude)"
+        )
+    }
+
+    // MARK: Acciones
+
+    @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer)
+    {
+        if gesture.state == .began {
+            let point = gesture.location(in: map)
+            let coordinate = map.convert(point, toCoordinateFrom: map)
+
+            setSelectedPlace(at: coordinate, title: "Lugar seleccionado")
+        }
+    }
+
+    @objc private func selectionButtonTapped() {
+        // Aquí harás lo de "compartir lugar", crear geocerca, etc.
+        print("Botón de selección presionado")
+    }
+}
+
+extension PlacesViewController: UISearchBarDelegate {
+    func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
+        guard let query = searchBar.text, !query.isEmpty else { return }
+
+        let request = MKLocalSearch.Request()
+        request.naturalLanguageQuery = query
+        // Buscamos en lugares alrededor de nosotros
+        let region = MKCoordinateRegion(
+            center: CLLocationCoordinate2D(latitude: myCoordinates.latitude, longitude: myCoordinates.longitude),
+            latitudinalMeters: 10000,
+            longitudinalMeters: 10000
+        )
+        request.region = region
+
+        let search = MKLocalSearch(request: request)
+        search.start { [weak self] response, error in
+            guard
+                let self = self,
+                let response = response,
+                let first = response.mapItems.first
+            else { return }
+
+            let coordinate = first.placemark.coordinate
+            let name = first.name
+
+            // Usamos la MISMA lógica que el long press:
+            self.setSelectedPlace(at: coordinate, title: name)
+        }
+
+        searchBar.resignFirstResponder()
+    }
+}

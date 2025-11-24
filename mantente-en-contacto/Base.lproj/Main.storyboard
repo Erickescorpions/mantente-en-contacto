@@ -9,57 +9,25 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
-        <!--Places-->
+        <!--Places View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController storyboardIdentifier="PlacesVC" id="BYZ-38-t0r" customClass="PlacesViewController" customModule="mantente_en_contacto" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="map" translatesAutoresizingMaskIntoConstraints="NO" id="9KQ-ce-3Ch">
-                                <rect key="frame" x="0.0" y="118" width="393" height="637"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            </imageView>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ZFK-54-Ig8">
-                                <rect key="frame" x="52" y="268" width="100" height="105"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="indicator" translatesAutoresizingMaskIntoConstraints="NO" id="Psr-iQ-MbX">
-                                        <rect key="frame" x="14" y="0.0" width="70.666666666666671" height="90.666666666666671"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Erick's Work" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hQ5-Oq-j2j">
-                                        <rect key="frame" x="14" y="80" width="70" height="25"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <fontDescription key="fontDescription" type="boldSystem" pointSize="10"/>
-                                        <color key="textColor" systemColor="systemRedColor"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                                <gestureRecognizers/>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="a3l-BA-NrY" appends="YES" id="wkG-uH-Sn7"/>
-                                </connections>
-                            </view>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Places" image="map_icon" id="f5a-sb-b3D"/>
+                    <navigationItem key="navigationItem" id="UZS-Ep-PEa"/>
                     <connections>
-                        <outlet property="indicatorContainer" destination="ZFK-54-Ig8" id="wyO-lM-Dl0"/>
                         <segue destination="RoV-B1-2jv" kind="presentation" identifier="showPlaceConfig" id="7JY-hk-ae2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="a3l-BA-NrY">
-                    <connections>
-                        <action selector="handleOnTapGesture:" destination="BYZ-38-t0r" id="01r-D0-JvX"/>
-                    </connections>
-                </tapGestureRecognizer>
+                <tapGestureRecognizer id="a3l-BA-NrY"/>
             </objects>
-            <point key="canvasLocation" x="-179" y="-1031"/>
+            <point key="canvasLocation" x="747.32824427480909" y="-1031.6901408450706"/>
         </scene>
         <!--Profile-->
         <scene sceneID="Qo1-et-Lvh">
@@ -327,7 +295,7 @@
                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </tabBar>
                     <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="viewControllers" id="Oma-Pa-meM"/>
+                        <segue destination="TAU-Sj-B63" kind="relationship" relationship="viewControllers" id="Oma-Pa-meM"/>
                         <segue destination="8gH-G5-O4W" kind="relationship" relationship="viewControllers" id="8le-kx-l68"/>
                         <segue destination="jew-ZH-J4V" kind="relationship" relationship="viewControllers" id="zrD-54-Fm5"/>
                     </connections>
@@ -388,7 +356,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mT3-yP-dAS" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="584" y="-1031"/>
+            <point key="canvasLocation" x="1673" y="-1032"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="KGX-KY-b1W">
@@ -408,11 +376,28 @@
             </objects>
             <point key="canvasLocation" x="-2495" y="523"/>
         </scene>
+        <!--Places-->
+        <scene sceneID="WYf-Zy-zd8">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="TAU-Sj-B63" sceneMemberID="viewController">
+                    <tabBarItem key="tabBarItem" title="Places" image="map_icon" id="f5a-sb-b3D"/>
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6px-jb-Bmq">
+                        <rect key="frame" x="0.0" y="59" width="393" height="54"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Pm2-vT-NF5"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="YzZ-Hg-kEC" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-179.38931297709922" y="-1031.6901408450706"/>
+        </scene>
     </scenes>
     <resources>
         <image name="group_icon" width="50" height="50"/>
-        <image name="indicator" width="100" height="100"/>
-        <image name="map" width="1024" height="1536"/>
         <image name="map_icon" width="50" height="50"/>
         <image name="profile_icon" width="50" height="50"/>
         <image name="user1" width="408" height="612"/>
@@ -422,9 +407,6 @@
         </namedColor>
         <systemColor name="systemBackgroundColor">
             <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-        </systemColor>
-        <systemColor name="systemRedColor">
-            <color red="1" green="0.23137254900000001" blue="0.18823529410000001" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
         </systemColor>
     </resources>
 </document>
