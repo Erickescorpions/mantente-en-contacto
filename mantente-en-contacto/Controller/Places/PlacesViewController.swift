@@ -6,6 +6,8 @@
 //
 
 import CoreLocation
+import FirebaseAuth
+import FirebaseFirestore
 import MapKit
 import UIKit
 
@@ -22,7 +24,7 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
     private let searchController = UISearchController(
         searchResultsController: nil
     )
-    
+
     private let selectionButton: UIButton = {
         let button = UIButton(type: .system)
         button.setTitle("Compartir este lugar", for: .normal)
@@ -31,6 +33,7 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
         return button
     }()
 
+    // MARK: Lyfecycle
     override func viewDidLoad() {
         super.viewDidLoad()
         title = "Lugares compartidos"
@@ -67,6 +70,15 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
         super.viewDidAppear(animated)
         let status = manager.authorizationStatus
         handleAuthorizationStatus(status)
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+
+        // hacemos un refresh
+        Task {
+            await loadData()
+        }
     }
 
     // MARK: Boton de Seleccion
@@ -182,6 +194,49 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
         selectedCoordinates = coordinate
     }
 
+    private func loadData() async {
+        let db = Firestore.firestore()
+        guard let userId = Auth.auth().currentUser?.uid else {
+            showAlert(message: "You must be logged in to create a place.")
+            return
+        }
+
+        do {
+            // borramos los pines
+            let placePins = map.annotations.compactMap { $0 as? MyPlacesAnnotation }
+            map.removeAnnotations(placePins)
+            
+            let query = try await db.collection("places").whereField(
+                "userId",
+                isEqualTo: userId
+            ).getDocuments()
+
+            for document in query.documents {
+                // creamos un place
+                let place = try document.data(as: Place.self)
+                print("loaded polace", place.name)
+
+                let coordinate = CLLocationCoordinate2D(
+                    latitude: place.latitude,
+                    longitude: place.longitude
+                )
+
+                let annotation = MyPlacesAnnotation()
+                annotation.coordinate = coordinate
+                annotation.title = place.name
+                map.addAnnotation(annotation)
+            }
+
+        } catch {
+            showAlert(
+                message:
+                    "There was an error polling information about your places."
+            )
+        }
+    }
+    
+    
+
     // MARK: Acciones
 
     @objc private func handleLongPress(_ gesture: UILongPressGestureRecognizer)
@@ -197,7 +252,7 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
     @objc private func selectionButtonTapped() {
         performSegue(withIdentifier: "addPlace", sender: nil)
     }
-    
+
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if segue.identifier == "addPlace" {
             if let dest = segue.destination as? AddPlaceViewController {
@@ -209,6 +264,7 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
 
 }
 
+// MARK: Busqueda con Search Bar
 extension PlacesViewController: UISearchBarDelegate {
     func searchBarSearchButtonClicked(_ searchBar: UISearchBar) {
         guard let query = searchBar.text, !query.isEmpty else { return }
@@ -217,7 +273,10 @@ extension PlacesViewController: UISearchBarDelegate {
         request.naturalLanguageQuery = query
         // Buscamos en lugares alrededor de nosotros
         let region = MKCoordinateRegion(
-            center: CLLocationCoordinate2D(latitude: myCoordinates.latitude, longitude: myCoordinates.longitude),
+            center: CLLocationCoordinate2D(
+                latitude: myCoordinates.latitude,
+                longitude: myCoordinates.longitude
+            ),
             latitudinalMeters: 10000,
             longitudinalMeters: 10000
         )
@@ -240,4 +299,39 @@ extension PlacesViewController: UISearchBarDelegate {
 
         searchBar.resignFirstResponder()
     }
+}
+
+// MARK: Personalizacion de los pines
+
+extension PlacesViewController {
+    func mapView(_ mapView: MKMapView, viewFor annotation: MKAnnotation)
+        -> MKAnnotationView?
+    {
+
+        if annotation is MKUserLocation {
+            return nil
+        }
+
+        let identifier = "MyPlacePin"
+        var annotationView =
+            mapView.dequeueReusableAnnotationView(withIdentifier: identifier)
+            as? MKMarkerAnnotationView
+
+        if annotationView == nil {
+            annotationView = MKMarkerAnnotationView(
+                annotation: annotation,
+                reuseIdentifier: identifier
+            )
+            annotationView?.canShowCallout = true
+        } else {
+            annotationView?.annotation = annotation
+        }
+
+        if let myAnnotation = annotation as? MyPlacesAnnotation {
+            annotationView?.markerTintColor = myAnnotation.color
+        }
+
+        return annotationView
+    }
+
 }

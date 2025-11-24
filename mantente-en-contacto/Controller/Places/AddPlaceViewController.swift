@@ -7,6 +7,7 @@
 import UIKit
 import MapKit
 import FirebaseFirestore
+import FirebaseAuth
 
 final class AddPlaceViewController: UIViewController {
     
@@ -182,12 +183,18 @@ final class AddPlaceViewController: UIViewController {
             showAlert(message: "Please select a place on the map first")
             return
         }
+                
+        guard let userId = Auth.auth().currentUser?.uid else {
+            showAlert(message: "You must be logged in to create a place.")
+            return
+        }
 
         let place = Place(
             name: placeName,
             address: address,
             latitude: coordinates.latitude,
-            longitude: coordinates.longitude
+            longitude: coordinates.longitude,
+            userId: userId
         )
 
         // TODO: hace falta la logica para guardar los grupos
