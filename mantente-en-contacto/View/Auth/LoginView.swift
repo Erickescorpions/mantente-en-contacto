@@ -104,7 +104,7 @@ final class LoginView: UIView {
             passwordField,
             loginButton,
             createAccountLink,
-            forgotPasswordLink
+//            forgotPasswordLink
         ])
         sv.axis = .vertical
         sv.alignment = .fill
