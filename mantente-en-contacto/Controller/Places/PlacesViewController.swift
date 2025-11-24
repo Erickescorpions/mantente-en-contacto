@@ -17,6 +17,8 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
     private let manager = CLLocationManager()
     private var hasCenteredOnce = false
     private var myCoordinates: CLLocationCoordinate2D!
+    private var selectedCoordinates: CLLocationCoordinate2D!
+    private var selectedPlaceName: String!
     private let searchController = UISearchController(
         searchResultsController: nil
     )
@@ -176,9 +178,8 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
         map.setRegion(region, animated: true)
 
         selectionButton.isHidden = false
-        print(
-            "SelectionAnnotation en: \(coordinate.latitude), \(coordinate.longitude)"
-        )
+        selectedPlaceName = title ?? ""
+        selectedCoordinates = coordinate
     }
 
     // MARK: Acciones
@@ -194,9 +195,18 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
     }
 
     @objc private func selectionButtonTapped() {
-        // Aquí harás lo de "compartir lugar", crear geocerca, etc.
-        print("Botón de selección presionado")
+        performSegue(withIdentifier: "addPlace", sender: nil)
     }
+    
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "addPlace" {
+            if let dest = segue.destination as? AddPlaceViewController {
+                dest.coordinates = self.selectedCoordinates
+                dest.placeName = self.selectedPlaceName
+            }
+        }
+    }
+
 }
 
 extension PlacesViewController: UISearchBarDelegate {
