@@ -7,6 +7,7 @@
 
 import UIKit
 import FirebaseAuth
+import FirebaseFirestore
 
 final class AddGroupViewController: UIViewController {
 
@@ -139,7 +140,7 @@ final class AddGroupViewController: UIViewController {
     }()
 
     
-    private var selectedMembers: [String] = []
+    private var selectedMembers: [User] = []
     private var selectedColor: UIColor = .systemYellow
 
     // MARK: Lifecycle
@@ -268,30 +269,50 @@ final class AddGroupViewController: UIViewController {
     }
 
     // MARK: - Actions
-
     @objc private func addMemberTapped() {
-        // validamos que este ingresando texto
-        let memberUsername =
-            memberSearchField.text?.trimmingCharacters(
-                in: .whitespacesAndNewlines
-            ) ?? ""
+        let memberUsername = memberSearchField.text?
+            .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
+        
         guard !memberUsername.isEmpty else {
             showAlert(message: "Please enter a username to add a member.")
             return
         }
-
-        // TODO: Buscar usuario en Firebase
         
-        if !selectedMembers.contains(memberUsername) {
-            selectedMembers.append(memberUsername)
-            membersTableView.reloadData()
-        } else {
-            showAlert(message: "This user is already part of the group.")
-            return
+        for member in selectedMembers {
+            if member.username == memberUsername {
+                showAlert(message: "This user is already part of the group.")
+                return
+            }
         }
-
-        memberSearchField.text = ""
+        
+        let db = Firestore.firestore()
+        
+        Task { [weak self] in
+            guard let self = self else { return }
+            
+            do {
+                let snapshot = try await db.collection("users")
+                    .whereField("username", isEqualTo: memberUsername)
+                    .getDocuments()
+                
+                guard let doc = snapshot.documents.first else {
+                    self.showAlert(message: "We couldn't find any user with that username.")
+                    return
+                }
+ 
+                let user = try doc.data(as: User.self)
+                
+                self.selectedMembers.append(user)
+                self.membersTableView.reloadData()
+                self.memberSearchField.text = ""
+                
+            } catch {
+                print("Error searching user:", error)
+                self.showAlert(message: "There was an error searching for that user. Please try again.")
+            }
+        }
     }
+
 
     @objc private func pickColorTapped() {
         let picker = UIColorPickerViewController()
@@ -331,6 +352,8 @@ final class AddGroupViewController: UIViewController {
 
         // TODO: Guardarlo en Firebase
         
+        
+        
         dismiss(animated: true)
     }
 }
@@ -353,7 +376,7 @@ extension AddGroupViewController: UITableViewDataSource, UITableViewDelegate {
             for: indexPath
         )
         let member = selectedMembers[indexPath.row]
-        cell.textLabel?.text = member
+        cell.textLabel?.text = member.username
         return cell
     }
 

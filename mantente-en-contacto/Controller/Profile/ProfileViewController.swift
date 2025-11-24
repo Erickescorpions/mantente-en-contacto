@@ -59,7 +59,7 @@ class ProfileViewController: UIViewController {
 
         profileImage.layer.cornerRadius = profileImage.frame.width / 2
 
-        logoutBtn.backgroundColor = .myYellow  // tu color amarillo
+        logoutBtn.backgroundColor = .systemRed
         logoutBtn.setTitleColor(.black, for: .normal)
         logoutBtn.titleLabel?.font = .systemFont(ofSize: 18, weight: .semibold)
 
