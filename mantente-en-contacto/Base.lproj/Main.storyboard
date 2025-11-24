@@ -38,71 +38,53 @@
                         <rect key="frame" x="0.0" y="0.0" width="393" height="852"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="user1" translatesAutoresizingMaskIntoConstraints="NO" id="Vp5-QL-d8K">
-                                <rect key="frame" x="71.666666666666671" y="158" width="249.66666666666663" height="250"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user1" translatesAutoresizingMaskIntoConstraints="NO" id="Vp5-QL-d8K">
+                                <rect key="frame" x="71.666666666666686" y="158" width="250" height="250"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="TFg-3z-rC6"/>
+                                    <constraint firstAttribute="height" constant="250" id="WJa-Mt-CK5"/>
+                                </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Erick Alejandro Vazquez Sanchez" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3P-QI-zgT">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Erick Alejandro Vazquez Sanchez" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontForContentSizeCategory="YES" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="i3P-QI-zgT">
                                 <rect key="frame" x="31" y="418" width="331" height="26.333333333333314"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="22"/>
                                 <color key="textColor" name="customColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <tableView clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="-1" estimatedRowHeight="-1" sectionHeaderHeight="-1" estimatedSectionHeaderHeight="-1" sectionFooterHeight="-1" estimatedSectionFooterHeight="-1" translatesAutoresizingMaskIntoConstraints="NO" id="r8V-D1-CCM">
-                                <rect key="frame" x="10" y="484.33333333333331" width="373" height="210.66666666666669"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                                <prototypes>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" preservesSuperviewLayoutMargins="YES" selectionStyle="default" indentationWidth="10" reuseIdentifier="cell" id="bNQ-dd-Hfe" customClass="ProfileTableViewCell" customModule="mantente_en_contacto" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="50" width="373" height="51"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" preservesSuperviewLayoutMargins="YES" insetsLayoutMarginsFromSafeArea="NO" tableViewCell="bNQ-dd-Hfe" id="O7V-YL-hoK">
-                                            <rect key="frame" x="0.0" y="0.0" width="373" height="51"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="QEM-tg-VLn">
-                                                    <rect key="frame" x="10" y="10.666666666666664" width="30" height="30"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="30" id="coc-Gx-PTy"/>
-                                                        <constraint firstAttribute="height" constant="30" id="qWl-2i-2P1"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rf7-cA-svc">
-                                                    <rect key="frame" x="60" y="15" width="273" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Rf7-cA-svc" firstAttribute="leading" secondItem="QEM-tg-VLn" secondAttribute="trailing" constant="20" id="7sE-FJ-YoG"/>
-                                                <constraint firstItem="Rf7-cA-svc" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="QEM-tg-VLn" secondAttribute="trailing" constant="8" symbolic="YES" id="Avu-aO-SQv"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Rf7-cA-svc" secondAttribute="trailing" constant="20" id="LMx-zT-Mbv"/>
-                                                <constraint firstItem="QEM-tg-VLn" firstAttribute="centerY" secondItem="O7V-YL-hoK" secondAttribute="centerY" id="PSX-FC-jnc"/>
-                                                <constraint firstAttribute="trailingMargin" secondItem="Rf7-cA-svc" secondAttribute="trailing" constant="20" id="Tek-dX-0id"/>
-                                                <constraint firstItem="Rf7-cA-svc" firstAttribute="centerY" secondItem="O7V-YL-hoK" secondAttribute="centerY" id="aW4-Ng-4KD"/>
-                                                <constraint firstItem="QEM-tg-VLn" firstAttribute="leading" secondItem="O7V-YL-hoK" secondAttribute="leading" constant="10" id="zVN-nP-cP5"/>
-                                            </constraints>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <outlet property="iconImage" destination="QEM-tg-VLn" id="fhz-5Z-Grs"/>
-                                            <outlet property="title" destination="Rf7-cA-svc" id="B5k-U0-g9T"/>
-                                        </connections>
-                                    </tableViewCell>
-                                </prototypes>
-                                <sections/>
-                                <connections>
-                                    <outlet property="dataSource" destination="jew-ZH-J4V" id="Cau-Mq-j9Z"/>
-                                    <outlet property="delegate" destination="jew-ZH-J4V" id="wVL-Kh-GcI"/>
-                                </connections>
-                            </tableView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dyr-cM-kSL">
+                                <rect key="frame" x="151.66666666666666" y="694" width="90" height="35"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="90" id="tTX-5g-G16"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Log out">
+                                    <color key="baseForegroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </buttonConfiguration>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="erick.vazquez.wk@gmail.com" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="p7n-Q2-IKl">
+                                <rect key="frame" x="85.666666666666686" y="454.33333333333331" width="222" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="Bqv-X9-9zo"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <constraints>
+                            <constraint firstItem="p7n-Q2-IKl" firstAttribute="centerX" secondItem="yvq-gJ-b9f" secondAttribute="centerX" id="0vi-Pz-eGy"/>
+                            <constraint firstItem="i3P-QI-zgT" firstAttribute="top" secondItem="Vp5-QL-d8K" secondAttribute="bottom" constant="10" id="1rB-wS-EyF"/>
+                            <constraint firstItem="i3P-QI-zgT" firstAttribute="centerX" secondItem="yvq-gJ-b9f" secondAttribute="centerX" id="9Yu-sk-ptU"/>
+                            <constraint firstItem="Vp5-QL-d8K" firstAttribute="top" secondItem="Bqv-X9-9zo" secondAttribute="top" constant="99" id="G4Q-2Y-DPT"/>
+                            <constraint firstItem="Dyr-cM-kSL" firstAttribute="centerX" secondItem="yvq-gJ-b9f" secondAttribute="centerX" id="OVo-wB-JAi"/>
+                            <constraint firstItem="p7n-Q2-IKl" firstAttribute="top" secondItem="i3P-QI-zgT" secondAttribute="bottom" constant="10" id="SVZ-11-bvS"/>
+                            <constraint firstItem="Vp5-QL-d8K" firstAttribute="centerX" secondItem="yvq-gJ-b9f" secondAttribute="centerX" id="v4y-CX-UNP"/>
+                            <constraint firstItem="Bqv-X9-9zo" firstAttribute="bottom" secondItem="Dyr-cM-kSL" secondAttribute="bottom" constant="40" id="yB4-AI-PxK"/>
+                        </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Profile" image="profile_icon" id="oyh-uo-HxQ"/>
                     <connections>
+                        <outlet property="emailLabel" destination="p7n-Q2-IKl" id="qpQ-Ug-DRg"/>
+                        <outlet property="logoutBtn" destination="Dyr-cM-kSL" id="9VV-kl-I1E"/>
                         <outlet property="profileImage" destination="Vp5-QL-d8K" id="2tl-p0-0Yd"/>
                         <outlet property="usernameLabel" destination="i3P-QI-zgT" id="2NH-dW-HO9"/>
                     </connections>

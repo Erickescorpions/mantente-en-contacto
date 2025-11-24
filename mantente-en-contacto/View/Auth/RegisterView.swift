@@ -52,7 +52,7 @@ final class RegisterView: UIView {
         tf.borderStyle = .roundedRect
         
         tf.isSecureTextEntry = true
-        tf.textContentType = .password
+        tf.textContentType = .newPassword
         tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         tf.spellCheckingType = .no
@@ -67,7 +67,7 @@ final class RegisterView: UIView {
         tf.borderStyle = .roundedRect
         
         tf.isSecureTextEntry = true
-        tf.textContentType = .password
+        tf.textContentType = .newPassword
         tf.autocorrectionType = .no
         tf.autocapitalizationType = .none
         tf.spellCheckingType = .no

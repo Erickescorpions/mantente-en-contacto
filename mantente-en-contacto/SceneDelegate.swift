@@ -17,14 +17,6 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
         
         guard let windowScene = scene as? UIWindowScene else { return }
         let window = UIWindow(windowScene: windowScene)
-
-        do {
-            try Auth.auth().signOut()
-            print("signOut forzado al arrancar")
-        } catch {
-            print("error al forzar signOut:", error)
-        }
-
         
         let hasSeenOnboarding = UserDefaults.standard.bool(forKey: "hasSeenOnboarding")
         let isLoggedIn = Auth.auth().currentUser != nil

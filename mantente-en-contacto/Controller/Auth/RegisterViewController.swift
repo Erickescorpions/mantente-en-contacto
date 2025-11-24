@@ -136,7 +136,7 @@ class RegisterViewController: UIViewController {
             let db = Firestore.firestore()
 
             let userDto = User(
-                username: "username",
+                username: username,
                 avatarUrl: nil,
                 email: email
             )
