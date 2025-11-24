@@ -5,8 +5,9 @@
 //  Created by Erick :) Vazquez on 07/11/25.
 //
 
-import UIKit
 import FirebaseAuth
+import FirebaseFirestore
+import UIKit
 
 class RegisterViewController: UIViewController {
     private let contentView = RegisterView()
@@ -23,12 +24,14 @@ class RegisterViewController: UIViewController {
             for: .touchUpInside
         )
     }
-    
+
     private func isValidEmail(_ email: String) -> Bool {
         let regex = "[A-Z0-9a-z._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}"
-        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(with: email)
+        return NSPredicate(format: "SELF MATCHES %@", regex).evaluate(
+            with: email
+        )
     }
-    
+
     private func validate(data: [String: String]) -> String? {
         for (key, value) in data {
 
@@ -49,7 +52,7 @@ class RegisterViewController: UIViewController {
                 guard value.count >= 6 else {
                     return "Password must be at least 6 characters long."
                 }
-                
+
             case "username":
                 guard !value.isEmpty else {
                     return "Please enter your username."
@@ -64,14 +67,13 @@ class RegisterViewController: UIViewController {
                 break
             }
         }
-        
+
         if data["confirmationPassword"] != data["password"] {
             return "Passwords must match"
         }
-            
+
         return nil
     }
-
 
     @objc private func registerTapped() {
         let username = contentView.usernameField.text ?? ""
@@ -83,51 +85,88 @@ class RegisterViewController: UIViewController {
             "username": username,
             "email": email,
             "password": password,
-            "confirmationPassword": confirmationPassword
+            "confirmationPassword": confirmationPassword,
         ]
-        
+
         if let errorMessage = validate(data: data) {
             self.showAlert(message: errorMessage)
             return
         }
-        
+
         // creamos la cuenta en firebase
-        Auth.auth().createUser(withEmail: email, password: password) { authResult, error in
-            
+        Auth.auth().createUser(withEmail: email, password: password) {
+            authResult,
+            error in
+
             // Si hay error, lo manejamos
             if let error = error as NSError? {
                 if let errorCode = AuthErrorCode(rawValue: error.code) {
-                    
+
                     switch errorCode {
                     case .invalidEmail:
-                        self.showAlert(message: "The email address is badly formatted.")
-                        
+                        self.showAlert(
+                            message: "The email address is badly formatted."
+                        )
+
                     case .emailAlreadyInUse:
-                        self.showAlert(message: "This email is already registered.")
-                        
+                        self.showAlert(
+                            message: "This email is already registered."
+                        )
+
                     case .weakPassword:
-                        self.showAlert(message: "Password must be at least 6 characters.")
-                        
+                        self.showAlert(
+                            message: "Password must be at least 6 characters."
+                        )
+
                     default:
                         self.showAlert(message: error.localizedDescription)
                     }
                 }
                 return
             }
-            
+
             guard let user = authResult?.user else {
-                self.showAlert(message: "Unexpected error creating your account.")
+                self.showAlert(
+                    message: "Unexpected error creating your account."
+                )
                 return
             }
-            
-            self.continueToAvatarSelection()
+
+            // creamos registro en coleccion user
+            let db = Firestore.firestore()
+
+            let userDto = User(
+                username: "username",
+                avatarUrl: nil,
+                email: email
+            )
+
+            do {
+                try db.collection("users").document(user.uid).setData(from: userDto)
+                self.continueToAvatarSelection()
+
+            } catch {
+                // no se pudo realizar el registro
+                // eliminamos la cuenta
+
+                self.showAlert(
+                    title: "Error",
+                    message:
+                        "Couldn't complete your registration. Please try again."
+                )
+                user.delete { deleteError in
+                    if let deleteError = deleteError {
+                        print("Couldn't delete user after Firestore failure:", deleteError)
+                    }
+                }
+                return
+            }
         }
 
-        
     }
-    
+
     private func continueToAvatarSelection() {
-        performSegue(withIdentifier: "AvatarSelection", sender: nil)
+        performSegue(withIdentifier: "toAvatarSelection", sender: nil)
     }
 
 }

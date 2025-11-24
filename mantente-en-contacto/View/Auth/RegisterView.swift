@@ -50,15 +50,28 @@ final class RegisterView: UIView {
         let tf = UITextField()
         tf.placeholder = "Password"
         tf.borderStyle = .roundedRect
+        
         tf.isSecureTextEntry = true
+        tf.textContentType = .password
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
+        tf.spellCheckingType = .no
+        
         return tf
     }()
+
     
     let confirmPasswordField: UITextField = {
         let tf = UITextField()
         tf.placeholder = "Confirm password"
         tf.borderStyle = .roundedRect
+        
         tf.isSecureTextEntry = true
+        tf.textContentType = .password
+        tf.autocorrectionType = .no
+        tf.autocapitalizationType = .none
+        tf.spellCheckingType = .no
+        
         return tf
     }()
     
