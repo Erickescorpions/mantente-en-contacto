@@ -5,16 +5,16 @@
 //  Created by Erick :) Vazquez on 24/11/25.
 //
 
-import UIKit
 import FirebaseAuth
 import FirebaseFirestore
+import UIKit
 
 final class AddGroupViewController: UIViewController {
 
     private var selectedMembers: [User] = []
     private var selectedColor: UIColor = .systemYellow
     let dataManager = GroupRepository()
-    
+
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Add a new group"
@@ -152,9 +152,47 @@ final class AddGroupViewController: UIViewController {
 
         setupTableView()
         setupLayout()
+
+        Task {
+            await setupGroup()
+        }
     }
 
     // MARK: Setup
+
+    private func setupGroup() async {
+        // nos agregamos a nosotros mismos
+        guard let userId = Auth.auth().currentUser?.uid else {
+            await MainActor.run {
+                self.showAlert(message: "You must be logged in to create a group.")
+            }
+            return
+        }
+        
+        let db = Firestore.firestore()
+        
+        do {
+            let snapshot = try await db
+                .collection("users")
+                .document(userId)
+                .getDocument()
+            
+            let user = try snapshot.data(as: User.self)
+            
+            selectedMembers.append(user)
+            
+            await MainActor.run {
+                self.membersTableView.reloadData()
+            }
+            
+        } catch {
+            print("Error loading current user:", error)
+            await MainActor.run {
+                self.showAlert(message: "There was an error loading your user info.")
+            }
+        }
+    }
+
 
     private func setupTableView() {
         membersTableView.dataSource = self
@@ -268,60 +306,67 @@ final class AddGroupViewController: UIViewController {
         ])
     }
 
-    // MARK: - Actions
+    // MARK: Actions
     @objc private func addMemberTapped() {
-        let memberUsername = memberSearchField.text?
+        let memberUsername =
+            memberSearchField.text?
             .trimmingCharacters(in: .whitespacesAndNewlines) ?? ""
-        
+
         guard !memberUsername.isEmpty else {
             showAlert(message: "Please enter a username to add a member.")
             return
         }
-        
+
         for member in selectedMembers {
             if member.username == memberUsername {
                 showAlert(message: "This user is already part of the group.")
                 return
             }
         }
-        
+
         let db = Firestore.firestore()
-        
+
         Task { [weak self] in
             guard let self = self else { return }
-            
+
             do {
                 let snapshot = try await db.collection("users")
                     .whereField("username", isEqualTo: memberUsername)
                     .getDocuments()
-                
+
                 guard let doc = snapshot.documents.first else {
-                    self.showAlert(message: "We couldn't find any user with that username.")
+                    self.showAlert(
+                        message: "We couldn't find any user with that username."
+                    )
                     return
                 }
- 
+
                 let user = try doc.data(as: User.self)
                 guard let userId = Auth.auth().currentUser?.uid else {
-                    showAlert(message: "You must be logged in to create a place.")
+                    showAlert(
+                        message: "You must be logged in to create a place."
+                    )
                     return
                 }
-                
+
                 if userId == user.id {
                     showAlert(message: "Cannot add to yourself.")
                     return
                 }
-                
+
                 self.selectedMembers.append(user)
                 self.membersTableView.reloadData()
                 self.memberSearchField.text = ""
-                
+
             } catch {
                 print("Error searching user:", error)
-                self.showAlert(message: "There was an error searching for that user. Please try again.")
+                self.showAlert(
+                    message:
+                        "There was an error searching for that user. Please try again."
+                )
             }
         }
     }
-
 
     @objc private func pickColorTapped() {
         let picker = UIColorPickerViewController()
@@ -332,43 +377,46 @@ final class AddGroupViewController: UIViewController {
 
     @objc private func saveButtonTapped() {
         let name =
-        groupNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-        ?? ""
-        
+            groupNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+            ?? ""
+
         // validacion
         guard !name.isEmpty else {
             showAlert(message: "Please enter a group name.")
             return
         }
-        
+
         guard !selectedMembers.isEmpty else {
             showAlert(message: "Please add at least one member.")
             return
         }
-        
+
         guard let userId = Auth.auth().currentUser?.uid else {
             showAlert(message: "You must be logged in to create a place.")
             return
         }
-        
+
         let colorHex = selectedColor.toHexString()
-        
+
         let group = Group(
             name: name,
             color: colorHex,
             ownerId: userId
         )
-        
+
         Task {
-            let res = await dataManager.createGroup(group: group, members: selectedMembers)
-            
+            let res = await dataManager.createGroup(
+                group: group,
+                members: selectedMembers
+            )
+
             if res {
                 self.dismiss(animated: true)
-                
+
                 DispatchQueue.main.async {
                     self.showAlert(message: "Group successfully created")
                 }
-                
+
             } else {
                 self.showAlert(message: "There was an error creating the group")
             }
@@ -395,7 +443,12 @@ extension AddGroupViewController: UITableViewDataSource, UITableViewDelegate {
             for: indexPath
         )
         let member = selectedMembers[indexPath.row]
-        cell.textLabel?.text = member.username
+        let userId = Auth.auth().currentUser?.uid
+        if userId == member.id {
+            cell.textLabel?.text = member.username + " (You)"
+        } else {
+            cell.textLabel?.text = member.username
+        }
         return cell
     }
 

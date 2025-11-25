@@ -87,7 +87,6 @@ class GroupsViewController: UIViewController {
             
             self.groups = loadedGroups
             self.members = membersByGroup
-            print(self.members)
             
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -156,7 +155,14 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
         let member = groupMembers[indexPath.row]
 
         cell.memberImage.image = UIImage(systemName: "person.crop.circle")
-        cell.memberUsername.text = member.username
+        
+        var username = member.username
+        let userId = Auth.auth().currentUser?.uid
+        if userId == member.userId {
+            username = username + " (You)"
+        }
+        
+        cell.memberUsername.text = username
 
         return cell
     }
