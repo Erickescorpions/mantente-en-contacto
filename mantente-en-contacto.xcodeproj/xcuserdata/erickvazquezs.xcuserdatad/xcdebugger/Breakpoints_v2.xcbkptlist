@@ -80,8 +80,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "251"
             endingLineNumber = "251"
-            landmarkName = "handleLongPress(_:)"
-            landmarkType = "7">
+            landmarkName = "PlacesViewController"
+            landmarkType = "3">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>

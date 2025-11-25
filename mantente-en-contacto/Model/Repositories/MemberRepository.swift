@@ -15,7 +15,7 @@ class MemberRepository {
             let snapshot = try await db
                 .collection("groups")
                 .document(groupId)
-                .collection("memberships")
+                .collection("members")
                 .getDocuments()
             
             let members: [Member] = try snapshot.documents.map { doc in

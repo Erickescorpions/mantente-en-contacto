@@ -16,18 +16,47 @@ class GroupsViewController: UIViewController {
     private var members: [[Member]] = []
 
     private let floatingActionButton = FloatingActionButton()
+    private let tableView = UITableView(frame: .zero, style: .insetGrouped)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
-        loadData()
-        layout()
         
-        floatingActionButton.addTarget(self, action: #selector(goToAddNewGroup), for: .touchUpInside)
+        title = "My Groups"
+        view.backgroundColor = .systemBackground
+        
+        setupTableView()
+        layout()
+        loadData()
+        
+        floatingActionButton.addTarget(
+            self,
+            action: #selector(goToAddNewGroup),
+            for: .touchUpInside
+        )
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        loadData()   // refresca al volver del modal
+    }
+
+    private func setupTableView() {
+        view.addSubview(tableView)
+        tableView.translatesAutoresizingMaskIntoConstraints = false
+        
+        tableView.delegate = self
+        tableView.dataSource = self
+        
+        tableView.rowHeight = 50
+        
+        tableView.register(GroupTableViewCell.self, forCellReuseIdentifier: "cell")
+        
+        NSLayoutConstraint.activate([
+            tableView.topAnchor.constraint(equalTo: view.safeAreaLayoutGuide.topAnchor),
+            tableView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            tableView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            tableView.bottomAnchor.constraint(equalTo: view.bottomAnchor)
+        ])
     }
 
     private func loadData() {
@@ -36,21 +65,36 @@ class GroupsViewController: UIViewController {
             return
         }
 
-        Task {
-            groups = await dataManager.loadGroupsWhereCurrentUserIsMember(
+        Task { [weak self] in
+            guard let self = self else { return }
+            
+            self.groups.removeAll()
+            self.members.removeAll()
+
+            let loadedGroups = await self.dataManager.loadGroupsWhereCurrentUserIsMember(
                 userId: userId
             )
-            for group in groups {
-                guard let groupId = group.id else { return }
-                let membersPerGroup =
-                    await memberDataManager.loadMembersPerGroup(
-                        groupId: groupId
-                    )
-                members.append(membersPerGroup)
+            
+            var membersByGroup: [[Member]] = []
+            
+            for group in loadedGroups {
+                guard let groupId = group.id else { continue }
+                let membersPerGroup = await self.memberDataManager.loadMembersPerGroup(
+                    groupId: groupId
+                )
+                membersByGroup.append(membersPerGroup)
+            }
+            
+            self.groups = loadedGroups
+            self.members = membersByGroup
+            print(self.members)
+            
+            DispatchQueue.main.async {
+                self.tableView.reloadData()
             }
         }
     }
-
+    
     private func layout() {
         view.addSubview(floatingActionButton)
         floatingActionButton.translatesAutoresizingMaskIntoConstraints = false
@@ -80,8 +124,8 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int)
         -> Int
     {
-        let members = members[section]
-        return members.count
+        let groupMembers = members[section]
+        return groupMembers.count
     }
 
     func tableView(
@@ -101,23 +145,15 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath)
         -> UITableViewCell
     {
-        let cell =
-            tableView.dequeueReusableCell(
-                withIdentifier: "cell",
-                for: indexPath
-            ) as! GroupTableViewCell
+        guard let cell = tableView.dequeueReusableCell(
+            withIdentifier: "cell",
+            for: indexPath
+        ) as? GroupTableViewCell else {
+            return UITableViewCell()
+        }
 
-        let group = groups[indexPath.section]
-        let members = members[indexPath.section]
-        let member = members[indexPath.row]
-
-        //        if let path = member.avatarPath, !path.isEmpty,
-        //            let img = UIImage(named: path)
-        //        {
-        //            cell.memberImage.image = img
-        //        } else {
-        //            cell.memberImage.image = UIImage(systemName: "person.crop.circle")
-        //        }
+        let groupMembers = members[indexPath.section]
+        let member = groupMembers[indexPath.row]
 
         cell.memberImage.image = UIImage(systemName: "person.crop.circle")
         cell.memberUsername.text = member.username
@@ -128,23 +164,21 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(
         _ tableView: UITableView,
         trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath
-    )
-        -> UISwipeActionsConfiguration?
+    ) -> UISwipeActionsConfiguration?
     {
-
         let deleteAction = UIContextualAction(
             style: .destructive,
             title: "Remove"
         ) { _, _, success in
             let group = self.groups[indexPath.section]
-            let members = self.members[indexPath.section]
+            let groupMembers = self.members[indexPath.section]
 
-            guard indexPath.row < members.count else {
+            guard indexPath.row < groupMembers.count else {
                 success(false)
                 return
             }
 
-            let member = members[indexPath.row]
+            let member = groupMembers[indexPath.row]
             let username = member.username ?? "this member"
 
             let alert = UIAlertController(
@@ -156,9 +190,10 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
 
             let confirm = UIAlertAction(title: "Confirm", style: .destructive) {
                 _ in
-                // lo eliminamos del array
-                // TODO: Falta eliminarlo de firestore
-                self.members.remove(at: indexPath.row)
+                // TODO: eliminar de Firestore
+
+                self.members[indexPath.section].remove(at: indexPath.row)
+                tableView.deleteRows(at: [indexPath], with: .automatic)
                 success(true)
             }
             alert.addAction(confirm)
@@ -172,5 +207,4 @@ extension GroupsViewController: UITableViewDelegate, UITableViewDataSource {
 
         return UISwipeActionsConfiguration(actions: [deleteAction])
     }
-
 }

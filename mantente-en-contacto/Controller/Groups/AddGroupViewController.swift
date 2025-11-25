@@ -11,6 +11,10 @@ import FirebaseFirestore
 
 final class AddGroupViewController: UIViewController {
 
+    private var selectedMembers: [User] = []
+    private var selectedColor: UIColor = .systemYellow
+    let dataManager = GroupRepository()
+    
     private let titleLabel: UILabel = {
         let label = UILabel()
         label.text = "Add a new group"
@@ -138,10 +142,6 @@ final class AddGroupViewController: UIViewController {
         )
         return btn
     }()
-
-    
-    private var selectedMembers: [User] = []
-    private var selectedColor: UIColor = .systemYellow
 
     // MARK: Lifecycle
 
@@ -301,6 +301,15 @@ final class AddGroupViewController: UIViewController {
                 }
  
                 let user = try doc.data(as: User.self)
+                guard let userId = Auth.auth().currentUser?.uid else {
+                    showAlert(message: "You must be logged in to create a place.")
+                    return
+                }
+                
+                if userId == user.id {
+                    showAlert(message: "Cannot add to yourself.")
+                    return
+                }
                 
                 self.selectedMembers.append(user)
                 self.membersTableView.reloadData()
@@ -323,15 +332,15 @@ final class AddGroupViewController: UIViewController {
 
     @objc private func saveButtonTapped() {
         let name =
-            groupNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
-            ?? ""
-
+        groupNameField.text?.trimmingCharacters(in: .whitespacesAndNewlines)
+        ?? ""
+        
         // validacion
         guard !name.isEmpty else {
             showAlert(message: "Please enter a group name.")
             return
         }
-
+        
         guard !selectedMembers.isEmpty else {
             showAlert(message: "Please add at least one member.")
             return
@@ -341,20 +350,30 @@ final class AddGroupViewController: UIViewController {
             showAlert(message: "You must be logged in to create a place.")
             return
         }
-
+        
         let colorHex = selectedColor.toHexString()
-
+        
         let group = Group(
             name: name,
             color: colorHex,
             ownerId: userId
         )
+        
+        Task {
+            let res = await dataManager.createGroup(group: group, members: selectedMembers)
+            
+            if res {
+                self.dismiss(animated: true)
+                
+                DispatchQueue.main.async {
+                    self.showAlert(message: "Group successfully created")
+                }
+                
+            } else {
+                self.showAlert(message: "There was an error creating the group")
+            }
+        }
 
-        // TODO: Guardarlo en Firebase
-        
-        
-        
-        dismiss(animated: true)
     }
 }
 
