@@ -79,7 +79,7 @@ final class AddGroupViewController: UIViewController {
 
     private let membersHintLabel: UILabel = {
         let label = UILabel()
-        label.text = "Search members by email or username"
+        label.text = "Search members by username"
         label.font = .systemFont(ofSize: 14)
         label.textColor = .secondaryLabel
         return label
@@ -87,7 +87,7 @@ final class AddGroupViewController: UIViewController {
 
     private let memberSearchField: UITextField = {
         let tf = UITextField()
-        tf.placeholder = "Search by email or username"
+        tf.placeholder = "Search by username"
         tf.borderStyle = .roundedRect
         tf.autocapitalizationType = .none
         tf.autocorrectionType = .no

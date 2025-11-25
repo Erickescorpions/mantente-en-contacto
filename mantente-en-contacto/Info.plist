@@ -2,19 +2,11 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>Esta app require acceso a tu galeria para seleccionar una imagen para tu perfil.</string>
-	<key>NSCameraUsageDescription</key>
-	<string>Esta app requiere la camara para tomar fotos para tu perfil.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>Tu ubicación solo se usará para detectar cuando llegues a los lugares que tú elijas y enviar una notificación a tus contactos. La app no comparte tu ubicación en tiempo real.</string>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Tu ubicación solo se usará para detectar cuando llegues a los lugares que tú elijas y enviar una notificación a tus contactos. La app no comparte tu ubicación en tiempo real.</string>
 	<key>UIApplicationSceneManifest</key>
 	<dict>
-		<key>UIApplicationSupportsTabbedSceneCollection</key>
-		<false/>
 		<key>UIApplicationSupportsMultipleScenes</key>
+		<false/>
+		<key>UIApplicationSupportsTabbedSceneCollection</key>
 		<false/>
 		<key>UISceneConfigurations</key>
 		<dict>

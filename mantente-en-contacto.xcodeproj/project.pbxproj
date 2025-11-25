@@ -178,12 +178,16 @@
 				DEVELOPMENT_TEAM = HYPV5J3YDT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "mantente-en-contacto/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Esta app requiere la camara para tomar fotos para tu perfil.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Tu ubicación solo se usará para detectar cuando llegues a los lugares que tú elijas y enviar una notificación a tus contactos. La app no comparte tu ubicación en tiempo real.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Tu ubicación solo se usará para detectar cuando llegues a los lugares que tú elijas y enviar una notificación a tus contactos. La app no comparte tu ubicación en tiempo real.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Esta app require acceso a tu galeria para seleccionar una imagen para tu perfil.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -211,12 +215,16 @@
 				DEVELOPMENT_TEAM = HYPV5J3YDT;
 				GENERATE_INFOPLIST_FILE = YES;
 				INFOPLIST_FILE = "mantente-en-contacto/Info.plist";
+				INFOPLIST_KEY_NSCameraUsageDescription = "Esta app requiere la camara para tomar fotos para tu perfil.";
+				INFOPLIST_KEY_NSLocationAlwaysAndWhenInUseUsageDescription = "Tu ubicación solo se usará para detectar cuando llegues a los lugares que tú elijas y enviar una notificación a tus contactos. La app no comparte tu ubicación en tiempo real.";
+				INFOPLIST_KEY_NSLocationWhenInUseUsageDescription = "Tu ubicación solo se usará para detectar cuando llegues a los lugares que tú elijas y enviar una notificación a tus contactos. La app no comparte tu ubicación en tiempo real.";
+				INFOPLIST_KEY_NSPhotoLibraryUsageDescription = "Esta app require acceso a tu galeria para seleccionar una imagen para tu perfil.";
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen;
 				INFOPLIST_KEY_UIMainStoryboardFile = Main;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
+				INFOPLIST_KEY_UISupportedInterfaceOrientations = UIInterfaceOrientationPortrait;
+				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown";
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

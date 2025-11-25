@@ -80,7 +80,6 @@ final class AddPlaceViewController: UIViewController {
         "Family",
         "Close friends",
         "Work",
-        "Gym buddies"
     ]
     
     private var selectedGroups = Set<Int>()
@@ -109,7 +108,6 @@ final class AddPlaceViewController: UIViewController {
     }
     
     private func setupLayout() {
-        // Usamos un stack para los campos de texto
         let fieldsStack = UIStackView(arrangedSubviews: [
             titleLabel,
             placeNameField,

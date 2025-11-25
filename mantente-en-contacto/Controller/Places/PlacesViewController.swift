@@ -174,6 +174,7 @@ class PlacesViewController: UIViewController, CLLocationManagerDelegate,
         at coordinate: CLLocationCoordinate2D,
         title: String?
     ) {
+        // eliminamos los pines de seleccion
         let selectionPins = map.annotations.filter { $0 is SelectionAnnotation }
         map.removeAnnotations(selectionPins)
 
