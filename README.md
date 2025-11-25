@@ -43,6 +43,10 @@ Para ingresar a la aplicación:
 - **Email:** `erick.vazquez.wk@gmail.com`  
 - **Password:** `1234567`
 
+En el caso de utilizar el simulador, pueden simular las coordenadas de la UNAM:
+- **latitud:** `19.33298733504095`
+- **longitud:** `-99.18762103258204`
+
 ---
 
 ## Dependencias del proyecto
